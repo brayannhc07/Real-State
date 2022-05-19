@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Header } from "../Components";
 // import { ContactDemo, HomeMainArticle } from '../Articles';
 
-const ContactPage = (props) => {
+const AboutPage = (props) => {
 	return (
 		<Fragment>
 			<Header backgroundImage="assets/img/showcases/home-page/home-page-header.jpg">
@@ -20,4 +20,4 @@ const ContactPage = (props) => {
 	);
 };
 
-export default ContactPage;
+export default AboutPage;

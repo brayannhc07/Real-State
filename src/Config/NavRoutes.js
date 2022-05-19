@@ -1,4 +1,4 @@
-import { ContactPage, HomePage, NotFoundPage, PropertiesPage } from "../Pages";
+import { AboutPage, HomePage, NotFoundPage, PropertiesPage } from "../Pages";
 
 const NavRoutes = [
 	{
@@ -17,10 +17,10 @@ const NavRoutes = [
 		show: true
 	},
 	{
-		display: "Contacto",
-		text: "Contacto",
-		route: "/contacto",
-		component: ContactPage,
+		display: "Acerca de",
+		text: "Acerca de",
+		route: "/acerca-de",
+		component: AboutPage,
 		show: true
 	},
 	{

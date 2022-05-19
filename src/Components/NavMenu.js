@@ -22,7 +22,7 @@ const NavMenu = (props) => {
         <div className="container">
           <Link className="navbar-brand d-flex" to="/">
             <img
-              src="assets/img/logos/logo-light.png"
+              src="assets/images/logos/logo.jpg"
               alt=""
               width="auto"
               height="34"

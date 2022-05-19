@@ -6,7 +6,7 @@ const NavBottom = () => {
 		<section className="container">
 			<div className="row text-center d-flex justify-content-between align-items-center">
 				<nav className="col-12 col-md-4 my-2">
-					<Link className="btn btn-link" to="/">
+					<Link className="btn btn-link text-light" to="/">
 						Inicio
 					</Link>
 				</nav>
