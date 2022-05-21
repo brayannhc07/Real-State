@@ -1,3 +1,4 @@
+import CarouselSlide from './CarouselSlide';
 import Footer from "./Footer";
 import Header from "./Header";
 import NavBottom from "./NavBottom";
@@ -11,6 +12,7 @@ import Gallery from './Gallery';
 
 
 export {
+  CarouselSlide,
   Footer,
   Gallery,
   Header,
