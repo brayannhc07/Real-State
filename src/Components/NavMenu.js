@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import ProfileButton from './ProfileButton';
 import { SiteName } from '../Config/SetupApp';
+import { sessionContext } from "../Context/sessionContext";
 
 const NavMenu = (props) => {
   const { navRoutes = [] } = props;
+  const { isLogged } = useContext(sessionContext);
 
   const onLinkClick = () => {
     // Oculta el menú al hacer click en un enlace
@@ -16,7 +18,7 @@ const NavMenu = (props) => {
   return (
     <React.Fragment>
       <nav
-        className="navbar navbar-expand-md navbar-light bg-light "
+        className="navbar navbar-expand-lg navbar-light bg-light "
         role="navigation"
       >
         <div className="container">
@@ -45,7 +47,7 @@ const NavMenu = (props) => {
           <div className="collapse navbar-collapse" id="navbarMenuMain">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 text-center">
               {navRoutes
-                .filter((x) => x.show)
+                .filter((x) => x.show && ((isLogged === true && x.auth === true) || !x.auth))
                 .map((value) => {
                   return (
                     <li

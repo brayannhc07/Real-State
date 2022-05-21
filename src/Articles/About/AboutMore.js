@@ -8,7 +8,7 @@ const AboutMore = props => {
           <div className="row">
             <div className="col-12 col-md-4 mb-2">
               <h3>Juriquilla, Querétaro</h3>
-              <p class="text-muted">Zona de calma y tranqulidad para tu familia...</p>
+              <p className="text-muted">Zona de calma y tranqulidad para tu familia...</p>
               <img src="assets/images/articles/about/about-more-01.jpg" className="img-fluid rounded" alt="" />
             </div>
             <div className="col-12 col-md-4 mb-2">
