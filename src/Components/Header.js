@@ -21,7 +21,7 @@ const HeaderParallax = styled.header`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  min-height: 400px;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;

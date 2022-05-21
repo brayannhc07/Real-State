@@ -7,9 +7,12 @@ import LogoutGoogle from './LogoutGoogle';
 import ProfileButton from './ProfileButton';
 import PropertyCard from './PropertyCard';
 import PropertiesSearch from './PropertiesSearch';
+import Gallery from './Gallery';
+
 
 export {
   Footer,
+  Gallery,
   Header,
   NavBottom,
   NavMenu,
