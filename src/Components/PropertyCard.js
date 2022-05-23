@@ -1,41 +1,56 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot, faToilet, faBed, faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const PropertyCard = props => {
-  const { bathrooms, id, imageUrl, location, price, rooms, size } = props.property;
+  const { name, imageUrl, location, price, bathrooms, rooms, size } = props.property;
 
   return (
     <div className="card mb-3 w-100">
-      <img src={ imageUrl }
-        alt="" 
-        className="card-img-top" />
+      <img src={imageUrl}
+        alt=""
+        className="card-img-top"
+        style={{ width: '100%', objectFit: 'cover', aspectRatio: '16/9' }} />
       <div className="p-4 card-body">
-        <h4 className="card-title">{ location }</h4>
-        <h5 className="card-subtitle mb-2 text-muted">{ id }</h5>
-        <p className="property-price text-primary mb-3 d-block text-success">
-          { price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) }
+        <h4 className="card-title">{location}</h4>
+        <h6 className="card-subtitle mb-2 text-muted">
+          <FontAwesomeIcon icon={faLocationDot} />
+          <small> {name} </small>
+        </h6>
+        <p className="h3 text-primary my-2 d-block text-success">
+          {price.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}
         </p>
-
-        <button className="btn btn-primary">Agendar cita</button>
-
-        <ul className="property-specs-wrap mb-3 mb-lg-0">
-          <li>
-           <span className="property-specs">Beds</span>
-           <span className="property-specs-number">{ rooms } <sup>+</sup></span>
-                   
-          </li>
-          <li>
-           <span className="property-specs">Baths</span>
-           <span className="property-specs-number">{ bathrooms }</span>
-                   
-          </li>
-           <li>
-             <span className="property-specs">SQ FT</span>
-             <span className="property-specs-number">{ size }</span>
-                   
-             </li>
-         </ul>
-
-        </div>
+      </div>
+      <ul className="list-group list-group-flush">
+        <li className="list-group-item d-flex">
+          <span className="me-auto">
+            Habitaciones
+          </span>
+          <span className="fw-bold">
+            {rooms} <FontAwesomeIcon icon={faBed} />
+          </span>
+        </li>
+        <li className="list-group-item d-flex">
+          <span className="me-auto">
+            Baños
+          </span>
+          <span className="fw-bold">
+            {bathrooms} <FontAwesomeIcon icon={faToilet} />
+          </span>
+        </li>
+        <li className="list-group-item d-flex">
+          <span className="me-auto">
+            Tamaño
+          </span>
+          <span>
+            {size.toLocaleString('es-MX')}
+            m<sup>2</sup> <FontAwesomeIcon icon={faSquareArrowUpRight} />
+          </span>
+        </li>
+      </ul>
+      <div className="card-body d-flex align-items-end">
+        <button className="btn btn-primary w-100">Agendar cita</button>
+      </div>
     </div>
   );
 };

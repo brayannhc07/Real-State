@@ -8,8 +8,9 @@ import LogoutGoogle from './LogoutGoogle';
 import ProfileButton from './ProfileButton';
 import PropertyCard from './PropertyCard';
 import PropertiesSearch from './PropertiesSearch';
+import PropertiesSearchControls from './PropiertiesSearchControls';
 import Gallery from './Gallery';
-
+import LoadingSpinner from './LoadingSpinner';
 
 export {
   CarouselSlide,
@@ -18,9 +19,11 @@ export {
   Header,
   NavBottom,
   NavMenu,
+  LoadingSpinner,
   LoginGoogle,
   LogoutGoogle,
   ProfileButton,
   PropertyCard,
-  PropertiesSearch
-};
+  PropertiesSearch,
+  PropertiesSearchControls
+}

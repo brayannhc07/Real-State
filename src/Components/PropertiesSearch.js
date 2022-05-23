@@ -1,28 +1,43 @@
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faPlus, faRefresh } from "@fortawesome/free-solid-svg-icons";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useContext } from "react";
 import { getPropertiesAsync } from "../Services/propertiesService";
-import { PropertyCard } from "./";
-// import { sessionContext } from '../context/sessionContext';
+import { PropertyCard, LoadingSpinner } from "./";
+import { sessionContext } from '../Context/sessionContext';
+import PropertiesSearchControls from "./PropiertiesSearchControls";
 // import SubjectDialog from "./SubjectDialog";
 // import { scheduleContext } from "../context/scheduleContext";
 
 const PropertiesSearch = props => {
 
-  // const { isLogged } = useContext(sessionContext);
+  const { isLogged } = useContext(sessionContext);
   // const { subjects, setSubjects } = useContext(scheduleContext);
   const [properties, setProperties] = useState([]);
-  // const [selectedSubject, setSelectedSubject] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [minPriceInitial, setMinPriceInitial] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [maxPriceInitial, setMaxPriceInitial] = useState(0);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [locations, setLocations] = useState([]);
 
   const refreshProperties = async () => {
+    setIsLoading(true);
 
     const res = await getPropertiesAsync();
-    console.log(res)
     if (res.ok) {
       setProperties(res.data);
     } else {
       setProperties([]);
     }
+    setIsLoading(false);
+    setMinPriceInitial(Math.min(...properties.map(property => property.price)) ?? 0);
+    setMaxPriceInitial(Math.max(...properties.map(property => property.price)) ?? 0);
+    setMinPrice(minPriceInitial);
+    setMaxPrice(maxPriceInitial);
+    setLocations(properties.map(property => property.location) ?? []);
+
   };
 
   useEffect(() => {
@@ -31,9 +46,26 @@ const PropertiesSearch = props => {
 
   return (
     <Fragment>
-      <div className="row mb-2">
+      <div className="row my-2">
+        <div className="col-12">
+          <PropertiesSearchControls
+            searchText={searchText}
+            setSearchText={setSearchText}
+            minPriceInitial={minPriceInitial}
+            maxPriceInitial={maxPriceInitial}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            setMinPrice={setMinPrice}
+            setMaxPrice={setMaxPrice}
+            locations={locations}
+            selectedLocation={selectedLocation}
+            setSelectedLocation={setSelectedLocation} />
+        </div>
+      </div>
+      <div className="row my-2">
         <div className="col-12 d-flex justify-content-end">
           {
+            isLogged &&
             <React.Fragment>
               <button
                 className="btn btn-secondary mx-1"
@@ -50,17 +82,29 @@ const PropertiesSearch = props => {
           }
         </div>
       </div>
-      <div className="row">
+      <div className="row justify-content-center my-2">
         {
-          properties.map((property) => {
-            return (
-              <div key={property.id} className="col-12 col-md-4 d-flex align-items-stretch">
-                <PropertyCard
-                  property={property}
-                />
-              </div>
-            );
-          })
+          isLoading &&
+          <LoadingSpinner />
+        }
+      </div>
+      <div className="row my2">
+        {
+          properties
+            .filter(property => property.status === 0
+              && (property.name.toLowerCase().includes(searchText.toLowerCase().trim())
+                || property.location.toLowerCase().includes(searchText.toLowerCase().trim()))
+              && property.price <= maxPrice && property.price >= minPrice
+            )
+            .map((property) => {
+              return (
+                <div key={property.id} className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+                  <PropertyCard
+                    property={property}
+                  />
+                </div>
+              );
+            })
         }
       </div>
       { /* <SubjectDialog subject={selectedSubject} /> */}

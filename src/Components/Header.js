@@ -5,8 +5,8 @@ const Header = (props) => {
   const { backgroundImage } = props;
 
   return (
-    <HeaderParallax 
-      className="container-fluid" 
+    <HeaderParallax
+      className="container-fluid"
       style={{ backgroundImage: `linear-gradient(0deg, rgba(66,84,101,0.4), rgba(66,84,101,0.4)), url(${backgroundImage})`, }}>
       <div className="row p-4">
         <div className="col-md-12">
@@ -17,7 +17,7 @@ const Header = (props) => {
   );
 };
 
-const HeaderParallax = styled.header`
+const HeaderParallax = styled.section`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

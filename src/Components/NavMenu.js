@@ -17,11 +17,11 @@ const NavMenu = (props) => {
   };
   return (
     <React.Fragment>
-      <nav
+      <header
         className="navbar navbar-expand-lg navbar-light bg-light "
         role="navigation"
       >
-        <div className="container">
+        <nav className="container">
           <Link className="navbar-brand d-flex" to="/">
             <img
               src="assets/images/logos/logo.png"
@@ -66,8 +66,8 @@ const NavMenu = (props) => {
               </form>
             </ul>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
     </React.Fragment>
   );
 };
