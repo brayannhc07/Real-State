@@ -7,6 +7,7 @@ import LoginGoogle from './LoginGoogle';
 import LogoutGoogle from './LogoutGoogle';
 import ProfileButton from './ProfileButton';
 import PropertyCard from './PropertyCard';
+import PropertiesRequestDialog from './PropertiesRequestDialog';
 import PropertiesSearch from './PropertiesSearch';
 import PropertiesSearchControls from './PropiertiesSearchControls';
 import Gallery from './Gallery';
@@ -24,6 +25,7 @@ export {
   LogoutGoogle,
   ProfileButton,
   PropertyCard,
+  PropertiesRequestDialog,
   PropertiesSearch,
   PropertiesSearchControls
 }

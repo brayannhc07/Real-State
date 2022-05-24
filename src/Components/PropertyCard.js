@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faToilet, faBed, faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
 
 const PropertyCard = props => {
-  const { name, imageUrl, location, price, bathrooms, rooms, size } = props.property;
+  const { property, setSelectedProperty } = props;
+  const { name, imageUrl, location, price, bathrooms, rooms, size } = property;
 
   return (
     <div className="card mb-3 w-100">
@@ -49,7 +50,13 @@ const PropertyCard = props => {
         </li>
       </ul>
       <div className="card-body d-flex align-items-end">
-        <button className="btn btn-primary w-100">Agendar cita</button>
+        <button
+          className="btn btn-primary w-100"
+          data-bs-toggle="modal"
+          data-bs-target="#propertiesRequestDialog"
+          onClick={_ => setSelectedProperty(property)}>
+          Agendar cita
+        </button>
       </div>
     </div>
   );
