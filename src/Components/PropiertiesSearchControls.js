@@ -1,38 +1,26 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const PropertiesSearchControls = props => {
 
   const { searchText, setSearchText,
     minPriceInitial, maxPriceInitial,
     minPrice, setMinPrice,
-    maxPrice, setMaxPrice,
-    locations, selectedLocation, setSelectedLocation
+    maxPrice, setMaxPrice
   } = props;
 
   return (
-    <div className="row">
-      <div className="col-12">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Buscar lugar o propiedad"
-          value={searchText}
-          onChange={e => setSearchText(e.target.value)} />
-      </div>
-      <div className="col-12 text-end my-2">
-        <button className="btn btn-secondary btn-sm"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseSearchFilters"
-          aria-expanded="false"
-          aria-controls="collapseSearchFilters">
-          Filtrar Propiedades <FontAwesomeIcon icon={faFilter} />
-        </button>
-      </div>
-      <div className="collapse col-12" id="collapseSearchFilters">
-        <div className="card card-body">
+    <div className="card">
+      <div className="card-body row">
+        <h3 className="card-title">Buscar y filtrar</h3>
+        <div className="col-12">
+          <input
+            type="text"
+            className="form-control my-2"
+            placeholder="Buscar lugar o propiedad"
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)} />
+        </div>
+        <div className="col-12 col-md-6">
           <label
             htmlFor="minPriceRange"
             className="form-label">
@@ -46,6 +34,8 @@ const PropertiesSearchControls = props => {
             value={minPrice}
             onChange={e => setMinPrice(e.target.value)}
             id="minPriceRange" />
+        </div>
+        <div className="col-12 col-md-6">
           <label
             htmlFor="maxPriceRange"
             className="form-label">
@@ -59,18 +49,6 @@ const PropertiesSearchControls = props => {
             value={maxPrice}
             onChange={e => setMaxPrice(e.target.value)}
             id="maxPriceRange" />
-
-        </div>
-        <div className="col-12">
-          <select class="form-select">
-            {
-              locations.map((location, index) => {
-                return (
-                  <option key={index}>{location}</option>
-                );
-              })
-            }
-          </select>
         </div>
       </div>
     </div>

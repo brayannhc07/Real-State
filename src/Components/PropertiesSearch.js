@@ -10,17 +10,14 @@ import PropertiesSearchControls from "./PropiertiesSearchControls";
 
 const PropertiesSearch = props => {
 
-  const { isLogged } = useContext(sessionContext);
-  // const { subjects, setSubjects } = useContext(scheduleContext);
+  // const { isLogged } = useContext(sessionContext);
   const [properties, setProperties] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [minPriceInitial, setMinPriceInitial] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
+  const [minPriceInitial, setMinPriceInitial] = useState(0);
   const [maxPriceInitial, setMaxPriceInitial] = useState(0);
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [locations, setLocations] = useState([]);
 
   const refreshProperties = async () => {
     setIsLoading(true);
@@ -32,17 +29,29 @@ const PropertiesSearch = props => {
       setProperties([]);
     }
     setIsLoading(false);
-    setMinPriceInitial(Math.min(...properties.map(property => property.price)) ?? 0);
-    setMaxPriceInitial(Math.max(...properties.map(property => property.price)) ?? 0);
-    setMinPrice(minPriceInitial);
-    setMaxPrice(maxPriceInitial);
-    setLocations(properties.map(property => property.location) ?? []);
-
   };
 
   useEffect(() => {
     refreshProperties();
   }, []);
+
+  useEffect(() => {
+    if (properties.length > 0) {
+      const minRange = Math.min(...properties.map(property => property.price));
+      const maxRange = Math.max(...properties.map(property => property.price));
+      console.log({ minRange, maxRange });
+      setMinPriceInitial(minRange);
+      setMaxPriceInitial(maxRange);
+      setMinPrice(minRange);
+      setMaxPrice(maxRange);
+    } else {
+      setMinPriceInitial(0);
+      setMaxPriceInitial(0);
+      setMinPrice(0);
+      setMaxPrice(0);
+
+    }
+  }, [properties]);
 
   return (
     <Fragment>
@@ -56,22 +65,13 @@ const PropertiesSearch = props => {
             minPrice={minPrice}
             maxPrice={maxPrice}
             setMinPrice={setMinPrice}
-            setMaxPrice={setMaxPrice}
-            locations={locations}
-            selectedLocation={selectedLocation}
-            setSelectedLocation={setSelectedLocation} />
+            setMaxPrice={setMaxPrice} />
         </div>
       </div>
       <div className="row my-2">
         <div className="col-12 d-flex justify-content-end">
           {
-            isLogged &&
             <React.Fragment>
-              <button
-                className="btn btn-secondary mx-1"
-                onClick={async () => await refreshProperties()}>
-                Recargar
-              </button>
               <button
                 className="btn btn-primary mx-1"
                 data-bs-toggle="modal"
@@ -90,11 +90,12 @@ const PropertiesSearch = props => {
       </div>
       <div className="row my2">
         {
+          !isLoading &&
           properties
             .filter(property => property.status === 0
               && (property.name.toLowerCase().includes(searchText.toLowerCase().trim())
                 || property.location.toLowerCase().includes(searchText.toLowerCase().trim()))
-              && property.price <= maxPrice && property.price >= minPrice
+              && (minPrice !== 0 && maxPrice !== 0 && property.price >= minPrice && property.price <= maxPrice)
             )
             .map((property) => {
               return (
