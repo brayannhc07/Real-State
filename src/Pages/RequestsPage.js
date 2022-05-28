@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { RequestsSearch } from '../Components';
 
 const RequestsPage = props => {
   return (
-    <h1>RequestsPage</h1>
+    <Fragment>
+      <main className="section container mid-container">
+        <RequestsSearch />
+      </main>
+    </Fragment>
   );
 };
 

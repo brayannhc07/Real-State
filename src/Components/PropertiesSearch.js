@@ -2,8 +2,9 @@
 // import { faPlus, faRefresh } from "@fortawesome/free-solid-svg-icons";
 import React, { Fragment, useEffect, useState, useContext } from "react";
 import { getPropertiesAsync } from "../Services/propertiesService";
-import { PropertyCard, LoadingSpinner, PropertiesSearchControls, PropertiesRequestDialog } from "./";
+import { PropertyCard, LoadingSpinner, PropertiesSearchControls, PropertiesRequestDialog, PropertiesDialog } from "./";
 import { sessionContext } from '../Context/sessionContext';
+import PropertiesDeleteDialog from "./PropertiesDeleteDialog";
 
 const PropertiesSearch = props => {
 
@@ -67,15 +68,15 @@ const PropertiesSearch = props => {
       </div>
       <div className="row my-2">
         <div className="col-12 d-flex justify-content-end">
-          { /*
-            <React.Fragment>
-              <button
-                className="btn btn-primary mx-1"
-                data-bs-toggle="modal"
-                data-bs-target="#propertiesRequestDialog">
-                Abrir Modal
-              </button>
-            </React.Fragment> */
+          {
+            isLogged &&
+            <button
+              className="btn btn-primary mx-1"
+              onClick={() => setSelectedProperty({})}
+              data-bs-toggle="modal"
+              data-bs-target="#propertiesDialog">
+              Registrar Propiedad
+            </button>
           }
         </div>
       </div>
@@ -107,6 +108,13 @@ const PropertiesSearch = props => {
         }
       </div>
       <PropertiesRequestDialog
+        refreshProperties={refreshProperties}
+        selectedProperty={selectedProperty} />
+      <PropertiesDialog
+        refreshProperties={refreshProperties}
+        selectedProperty={selectedProperty} />
+      <PropertiesDeleteDialog
+        refreshProperties={refreshProperties}
         selectedProperty={selectedProperty} />
     </Fragment>
   );

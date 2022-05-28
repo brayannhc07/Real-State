@@ -3,7 +3,7 @@ import { createRequestAsync } from '../Services/requestsService';
 
 const PropertiesRequestDialog = props => {
 
-  const { selectedProperty } = props;
+  const { selectedProperty, refreshProperties } = props;
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -29,13 +29,15 @@ const PropertiesRequestDialog = props => {
       console.log(res.message);
     }
 
+    refreshProperties();
+
   };
 
   return (
     <div className="modal fade" tabIndex="-1" id="propertiesRequestDialog" aria-hidden="true">
-      <div className="modal-dialog modal-lg modal-dialog-centered" tabIndex="-1">
+      <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" tabIndex="-1">
         <div className="modal-content">
-          <div className="modal-header border-bottom-0">
+          <div className="modal-header">
             <h4 className="modal-title">Solicitar cita de venta</h4>
           </div>
           <div className="modal-body">
@@ -44,6 +46,7 @@ const PropertiesRequestDialog = props => {
             </div>
             <div className="row mb-2">
               <div className="col-12 my-2">
+                <label className="form-label">Nombre completo</label>
                 <input
                   type="text"
                   className="form-control"
@@ -53,6 +56,7 @@ const PropertiesRequestDialog = props => {
                   placeholder="Nombre completo" />
               </div>
               <div className="col-12 my-2">
+                <label className="form-label">Correo electrónico</label>
                 <input
                   type="email"
                   className="form-control"
@@ -62,6 +66,7 @@ const PropertiesRequestDialog = props => {
                   placeholder="Correo electrónico" />
               </div>
               <div className="col-12 my-2">
+                <label className="form-label">Teléfono de contacto</label>
                 <input
                   type="tel"
                   className="form-control"
@@ -71,6 +76,7 @@ const PropertiesRequestDialog = props => {
                   placeholder="Teléfono de contacto" />
               </div>
               <div className="col-12 my-2">
+                <label className="form-label">Asunto</label>
                 <input
                   type="text"
                   className="form-control"
@@ -80,6 +86,7 @@ const PropertiesRequestDialog = props => {
                   placeholder="Asunto" />
               </div>
               <div className="col-12 my-2">
+                <label className="form-label">Mensaje</label>
                 <input
                   type="text"
                   className="form-control"

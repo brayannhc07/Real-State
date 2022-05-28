@@ -8,10 +8,13 @@ import LogoutGoogle from './LogoutGoogle';
 import ProfileButton from './ProfileButton';
 import PropertyCard from './PropertyCard';
 import PropertiesRequestDialog from './PropertiesRequestDialog';
+import PropertiesDialog from './PropertiesDialog';
+import PropertiesDeleteDialog from './PropertiesDeleteDialog';
 import PropertiesSearch from './PropertiesSearch';
 import PropertiesSearchControls from './PropiertiesSearchControls';
 import Gallery from './Gallery';
 import LoadingSpinner from './LoadingSpinner';
+import RequestsSearch from './RequestsSearch';
 
 export {
   CarouselSlide,
@@ -25,7 +28,10 @@ export {
   LogoutGoogle,
   ProfileButton,
   PropertyCard,
+  PropertiesDialog,
+  PropertiesDeleteDialog,
   PropertiesRequestDialog,
   PropertiesSearch,
-  PropertiesSearchControls
+  PropertiesSearchControls,
+  RequestsSearch
 }

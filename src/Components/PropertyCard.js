@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faToilet, faBed, faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons';
+import { sessionContext } from '../Context/sessionContext';
 
 const PropertyCard = props => {
   const { property, setSelectedProperty } = props;
   const { name, imageUrl, location, price, bathrooms, rooms, size } = property;
+  const { isLogged } = useContext(sessionContext);
 
   return (
     <div className="card mb-3 w-100">
@@ -49,14 +51,24 @@ const PropertyCard = props => {
           </span>
         </li>
       </ul>
-      <div className="card-body d-flex align-items-end">
+      <div className="card-body d-flex flex-column align-items-end">
         <button
-          className="btn btn-primary w-100"
+          className="btn btn-primary w-100 mb-1"
           data-bs-toggle="modal"
           data-bs-target="#propertiesRequestDialog"
           onClick={_ => setSelectedProperty(property)}>
           Agendar cita
         </button>
+        {
+          isLogged &&
+          <button
+            className="btn btn-outline-danger w-100 mb-1"
+            data-bs-toggle="modal"
+            data-bs-target="#propertiesDeleteDialog"
+            onClick={_ => setSelectedProperty(property)}>
+            Eliminar propiedad
+          </button>
+        }
       </div>
     </div>
   );
