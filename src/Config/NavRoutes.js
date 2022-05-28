@@ -17,7 +17,7 @@ const NavRoutes = [
     show: true
   },
   {
-    display: "Solicutudes",
+    display: "Solicitudes",
     text: "Solicitudes",
     route: "/solicitudes",
     component: RequestsPage,

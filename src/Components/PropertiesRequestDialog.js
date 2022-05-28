@@ -20,6 +20,7 @@ const PropertiesRequestDialog = props => {
     const request = {
       ...form,
       propertyId: selectedProperty.id,
+      status: 0,
       requestTime: new Date()
     };
 

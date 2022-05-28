@@ -2,16 +2,24 @@ import React, { Fragment, useContext, useState, useEffect } from 'react';
 import { sessionContext } from '../Context/sessionContext';
 import { LoadingSpinner } from './';
 import { getRequestsAsync } from '../Services/requestsService';
+import RequestCard from './RequestCard';
+import RequestManageDialog from './RequestManageDialog';
 
 const RequestsSearch = props => {
   const { isLogged } = useContext(sessionContext);
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [selectedProperty, setSelectedProperty] = useState({});
+  const [selectedRequest, setSelectedRequest] = useState({});
+  const [selectedTab, setSelectedTab] = useState(0);
 
 
-  const refreshProperties = async () => {
+  const tabs = [
+    "Pendientes",
+    "Aprobados",
+    "Rechazados"
+  ];
+
+  const refreshRequests = async () => {
     setIsLoading(true);
 
     const res = await getRequestsAsync();
@@ -24,39 +32,28 @@ const RequestsSearch = props => {
   };
 
   useEffect(() => {
-    refreshProperties();
+    refreshRequests();
   }, []);
 
-  useEffect(() => {
-
-  }, [requests]);
   return (
     <Fragment>
-      <div className="row my-2">
+      <div className="row my-4">
         <div className="col-12">
-          { /*          <PropertiesSearchControls
-            searchText={searchText}
-            setSearchText={setSearchText}
-            minPriceInitial={minPriceInitial}
-            maxPriceInitial={maxPriceInitial}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            setMinPrice={setMinPrice}
-            setMaxPrice={setMaxPrice} /> */}
-        </div>
-      </div>
-      <div className="row my-2">
-        <div className="col-12 d-flex justify-content-end">
-          { /*
-            <React.Fragment>
-              <button
-                className="btn btn-primary mx-1"
-                data-bs-toggle="modal"
-                data-bs-target="#propertiesRequestDialog">
-                Abrir Modal
-              </button>
-            </React.Fragment> */
-          }
+          <ul className="nav nav-tabs">
+            {
+              tabs.map((tab, index) => {
+                return (
+                  <li className="nav-item" key={index}>
+                    <button
+                      className={`nav-link ${index === selectedTab ? 'active' : ''}`}
+                      onClick={() => setSelectedTab(index)} >
+                      {tab}
+                    </button>
+                  </li>
+                );
+              })
+            }
+          </ul>
         </div>
       </div>
       <div className="row justify-content-center my-2">
@@ -65,19 +62,26 @@ const RequestsSearch = props => {
           <LoadingSpinner />
         }
       </div>
-      <div className="row my2">
+      <div className="row my-2">
         {
           !isLoading &&
-          requests
-            .map((request) => {
+          requests.filter(request => request.status === selectedTab)
+            .sort(request => request.requestTime)
+            .map((request, index) => {
               return (
-                <div key={request.id} className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
-                  <h1>{request.id}</h1>
+                <div key={index} className="col-12 col-md-6 d-flex align-items-stretch">
+                  <RequestCard
+                    setSelectedRequest={setSelectedRequest}
+                    request={request} />
                 </div>
               );
             })
         }
       </div>
+      <RequestManageDialog
+        selectedRequest={selectedRequest}
+        refreshRequests={refreshRequests} />
+
     </Fragment>
   );
 

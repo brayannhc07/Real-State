@@ -39,6 +39,27 @@ const getPropertiesAsync = async () => {
   }
 };
 
+const getPropertyAsync = async (id) => {
+
+  try {
+    const result = await api.get(`${controller}/${id}.json`);
+
+    if (result.status === 200) {
+      return {
+        ok: true,
+        data: result.data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: `[Error] ${error}.`
+    }
+  }
+};
+
+
 const createPropertyAsync = async (data) => {
   try {
     const result = await api.post(`${controller}.json`, data);
@@ -58,9 +79,9 @@ const createPropertyAsync = async (data) => {
   }
 };
 
-const updatePropertyAsync = async (id, data) => {
+const occupyPropertyAsync = async (id) => {
   try {
-    const result = await api.put(`${controller}/${id}.json`, data);
+    const result = await api.patch(`${controller}/${id}.json`, { status: 1 });
 
     if (result.status === 200) {
       return {
@@ -95,10 +116,12 @@ const deletePropertyAsync = async (id) => {
     }
   }
 };
+
 export {
   getPropertiesAsync,
+  getPropertyAsync,
   createPropertyAsync,
-  updatePropertyAsync,
+  occupyPropertyAsync,
   deletePropertyAsync
 }
 

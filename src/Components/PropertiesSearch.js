@@ -86,7 +86,7 @@ const PropertiesSearch = props => {
           <LoadingSpinner />
         }
       </div>
-      <div className="row my2">
+      <div className="row my-2">
         {
           !isLoading &&
           properties
@@ -95,9 +95,9 @@ const PropertiesSearch = props => {
                 || property.location.toLowerCase().includes(searchText.toLowerCase().trim()))
               && (minPrice !== 0 && maxPrice !== 0 && property.price >= minPrice && property.price <= maxPrice)
             )
-            .map((property) => {
+            .map((property, index) => {
               return (
-                <div key={property.id} className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+                <div key={index} className="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
                   <PropertyCard
                     property={property}
                     setSelectedProperty={setSelectedProperty}

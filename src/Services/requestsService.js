@@ -60,9 +60,52 @@ const createRequestAsync = async (data) => {
   }
 };
 
+const approveRequestAsync = async (id) => {
+
+  try {
+    const result = await api.patch(`${controller}/${id}.json`, { status: 1 });
+
+    if (result.status === 200) {
+
+      return {
+        ok: true,
+        data: result.data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: "Erorr."
+    }
+  }
+};
+
+const rejectRequestAsync = async (id) => {
+
+  try {
+    const result = await api.patch(`${controller}/${id}.json`, { status: 2 });
+
+    if (result.status === 200) {
+
+      return {
+        ok: true,
+        data: result.data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: "Erorr."
+    }
+  }
+};
 
 export {
   getRequestsAsync,
-  createRequestAsync
+  createRequestAsync,
+  approveRequestAsync,
+  rejectRequestAsync
 }
 
