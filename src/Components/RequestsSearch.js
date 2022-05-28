@@ -1,12 +1,10 @@
-import React, { Fragment, useContext, useState, useEffect } from 'react';
-import { sessionContext } from '../Context/sessionContext';
+import React, { Fragment, useState, useEffect } from 'react';
 import { LoadingSpinner } from './';
 import { getRequestsAsync } from '../Services/requestsService';
 import RequestCard from './RequestCard';
 import RequestManageDialog from './RequestManageDialog';
 
 const RequestsSearch = props => {
-  const { isLogged } = useContext(sessionContext);
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState({});
@@ -69,7 +67,7 @@ const RequestsSearch = props => {
             .sort(request => request.requestTime)
             .map((request, index) => {
               return (
-                <div key={index} className="col-12 col-md-6 d-flex align-items-stretch">
+                <div key={index} className="col-12 col-md-6 d-flex align-items-stretch mb-2">
                   <RequestCard
                     setSelectedRequest={setSelectedRequest}
                     request={request} />

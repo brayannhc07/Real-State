@@ -62,6 +62,16 @@ const PropertyCard = props => {
         {
           isLogged &&
           <button
+            className="btn btn-outline-info w-100 mb-1"
+            data-bs-toggle="modal"
+            data-bs-target="#propertiesDialog"
+            onClick={_ => setSelectedProperty(property)}>
+            Editar propiedad
+          </button>
+        }
+        {
+          isLogged &&
+          <button
             className="btn btn-outline-danger w-100 mb-1"
             data-bs-toggle="modal"
             data-bs-target="#propertiesDeleteDialog"

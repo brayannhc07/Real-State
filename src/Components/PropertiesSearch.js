@@ -112,7 +112,8 @@ const PropertiesSearch = props => {
         selectedProperty={selectedProperty} />
       <PropertiesDialog
         refreshProperties={refreshProperties}
-        selectedProperty={selectedProperty} />
+        selectedProperty={selectedProperty}
+        setSelectedProperty={setSelectedProperty} />
       <PropertiesDeleteDialog
         refreshProperties={refreshProperties}
         selectedProperty={selectedProperty} />

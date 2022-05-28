@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
-import { createPropertyAsync } from '../Services/propertiesService';
+import React from 'react';
+import { createPropertyAsync, updatePropertyAsync } from '../Services/propertiesService';
 
 const PropertiesDialog = props => {
 
-  const { refreshProperties } = props;
-
-  const [form, setForm] = useState({
-    name: '',
-    location: '',
-    price: 0,
-    rooms: 0,
-    bathrooms: 0,
-    size: 0,
-    status: 0,
-    imageUrl: ''
-  });
+  const { selectedProperty, setSelectedProperty, refreshProperties } = props;
+  console.log(selectedProperty);
+  const isNew = Object.keys(selectedProperty).length = 0;
 
   const changeHandler = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setSelectedProperty({ ...selectedProperty, [e.target.name]: e.target.value });
   }
 
   const saveRequest = async () => {
-    const res = await createPropertyAsync(form);
+    const { id, ...data } = selectedProperty;
+
+    const res = isNew ? await createPropertyAsync(data) : await updatePropertyAsync(id, data);
 
     if (!res.ok) {
       console.log(res.message);
@@ -45,7 +38,7 @@ const PropertiesDialog = props => {
                 <input
                   type="text"
                   className="form-control"
-                  value={form.name}
+                  value={selectedProperty.name ?? ''}
                   onChange={changeHandler}
                   name="name"
                   placeholder="Nombre de la propiedad" />
@@ -55,7 +48,7 @@ const PropertiesDialog = props => {
                 <input
                   type="text"
                   className="form-control"
-                  value={form.location}
+                  value={selectedProperty.location ?? ''}
                   onChange={changeHandler}
                   name="location"
                   placeholder="Ubicación" />
@@ -65,7 +58,7 @@ const PropertiesDialog = props => {
                 <input
                   type="number"
                   className="form-control"
-                  value={form.price}
+                  value={selectedProperty.price ?? ''}
                   onChange={changeHandler}
                   name="price"
                   placeholder="Costo" />
@@ -75,7 +68,7 @@ const PropertiesDialog = props => {
                 <input
                   type="number"
                   className="form-control"
-                  value={form.rooms}
+                  value={selectedProperty.rooms ?? ''}
                   onChange={changeHandler}
                   name="rooms"
                   placeholder="Habitaciones" />
@@ -85,7 +78,7 @@ const PropertiesDialog = props => {
                 <input
                   type="number"
                   className="form-control"
-                  value={form.bathrooms}
+                  value={selectedProperty.bathrooms ?? ''}
                   onChange={changeHandler}
                   name="bathrooms"
                   placeholder="Baños" />
@@ -95,7 +88,7 @@ const PropertiesDialog = props => {
                 <input
                   type="number"
                   className="form-control"
-                  value={form.size}
+                  value={selectedProperty.size ?? ''}
                   onChange={changeHandler}
                   name="size"
                   placeholder="Tamaño" />
@@ -105,7 +98,7 @@ const PropertiesDialog = props => {
                 <input
                   type="url"
                   className="form-control"
-                  value={form.imageUrl}
+                  value={selectedProperty.imageUrl ?? ''}
                   onChange={changeHandler}
                   name="imageUrl"
                   placeholder="Enlace de la imagen" />
@@ -125,7 +118,7 @@ const PropertiesDialog = props => {
               onClick={async _ => await saveRequest()}
               data-bs-dismiss="modal"
             >
-              Registrar propiedad
+              {isNew ? "Registrar propiedad" : "Editar propiedad"}
             </button>
           </div>
         </div>

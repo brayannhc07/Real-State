@@ -79,6 +79,25 @@ const createPropertyAsync = async (data) => {
   }
 };
 
+const updatePropertyAsync = async (id, data) => {
+  try {
+    const result = await api.put(`${controller}/${id}.json`, data);
+
+    if (result.status === 200) {
+      return {
+        ok: true,
+        data: result.data,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: "Erorr."
+    }
+  }
+};
+
 const occupyPropertyAsync = async (id) => {
   try {
     const result = await api.patch(`${controller}/${id}.json`, { status: 1 });
@@ -121,6 +140,7 @@ export {
   getPropertiesAsync,
   getPropertyAsync,
   createPropertyAsync,
+  updatePropertyAsync,
   occupyPropertyAsync,
   deletePropertyAsync
 }
