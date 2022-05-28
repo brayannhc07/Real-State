@@ -1,0 +1,1 @@
+export const SiteName = "Real State Inmobiliaria";
