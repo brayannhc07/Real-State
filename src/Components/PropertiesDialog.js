@@ -4,7 +4,6 @@ import { createPropertyAsync, updatePropertyAsync } from '../Services/properties
 const PropertiesDialog = props => {
 
   const { selectedProperty, setSelectedProperty, refreshProperties } = props;
-  console.log(selectedProperty);
   const isNew = Object.keys(selectedProperty).length = 0;
 
   const changeHandler = e => {
