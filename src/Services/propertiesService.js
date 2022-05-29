@@ -2,13 +2,10 @@ import axios from "axios";
 import { firebase } from "../Config/";
 
 const controller = "casas";
-
 const api = axios.create({ baseURL: firebase.db_url });
 
 
 const getPropertiesAsync = async () => {
-  // const localId = sessionStorage.getItem("localId") || '';
-  // const idToken = sessionStorage.getItem("idToken") || '';
 
   try {
     const result = await api.get(`${controller}.json`);

@@ -60,10 +60,15 @@ const createRequestAsync = async (data) => {
   }
 };
 
-const approveRequestAsync = async (id) => {
+const approveRequestAsync = async (id, user) => {
 
   try {
-    const result = await api.patch(`${controller}/${id}.json`, { status: 1 });
+    const req = {
+      status: 1,
+      approveUser: user,
+      approveTime: new Date()
+    };
+    const result = await api.patch(`${controller}/${id}.json`, req);
 
     if (result.status === 200) {
 
@@ -81,10 +86,15 @@ const approveRequestAsync = async (id) => {
   }
 };
 
-const rejectRequestAsync = async (id) => {
+const rejectRequestAsync = async (id, user) => {
 
   try {
-    const result = await api.patch(`${controller}/${id}.json`, { status: 2 });
+    const req = {
+      status: 2,
+      rejectUser: user,
+      rejectTime: new Date()
+    }
+    const result = await api.patch(`${controller}/${id}.json`, req);
 
     if (result.status === 200) {
 
