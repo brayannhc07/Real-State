@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { sessionContext } from '../Context/sessionContext';
 import { approveRequestAsync, rejectRequestAsync } from '../Services/requestsService';
 import { getPropertyAsync, occupyPropertyAsync } from '../Services/propertiesService';
 import PropertyCardPreview from './PropertyCardPreview';
@@ -7,22 +8,42 @@ import LoadingSpinner from './LoadingSpinner';
 const RequestManageDialog = props => {
 
   const { selectedRequest, refreshRequests } = props;
+  const { userProfile } = useContext(sessionContext);
   const [property, setProperty] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const approve = selectedRequest.status === 1;
+
 
   const approveRequest = async () => {
-    const res = await approveRequestAsync(selectedRequest.id);
+    const user = {
+      name: userProfile.fullName,
+      email: userProfile.email,
+      photoUrl: userProfile.photoUrl
+    };
+
+    const res = await approveRequestAsync(selectedRequest.id, user);
+    const res2 = await occupyPropertyAsync(selectedRequest.propertyId)
 
     if (!res.ok) {
       console.log(res.message);
     }
+
+    if (!res2.ok) {
+      console.log(res.message);
+    }
+
 
     refreshRequests();
 
   };
 
   const rejectRequest = async () => {
-    const res = await rejectRequestAsync(selectedRequest.id);
+    const user = {
+      name: userProfile.fullName,
+      email: userProfile.email,
+      photoUrl: userProfile.photoUrl
+    };
+    const res = await rejectRequestAsync(selectedRequest.id, user);
     const res2 = await occupyPropertyAsync(selectedRequest.propertyId)
 
     if (!res.ok) {
@@ -37,7 +58,7 @@ const RequestManageDialog = props => {
 
   };
 
-  const reladPropertyCard = async (id) => {
+  const reloadPropertyCard = async (id) => {
 
     setIsLoading(true);
 
@@ -55,7 +76,7 @@ const RequestManageDialog = props => {
 
   useEffect(() => {
     if (Object.keys(selectedRequest).length > 0) {
-      reladPropertyCard(selectedRequest.propertyId);
+      reloadPropertyCard(selectedRequest.propertyId);
     }
 
   }, [selectedRequest]);
@@ -69,6 +90,22 @@ const RequestManageDialog = props => {
           </div>
           <div className="modal-body">
             <div className="row mb-2">
+              {
+                (selectedRequest.status === 1 || selectedRequest.status === 2) &&
+                <div className="col-12">
+                  <div className={`card ${approve ? 'border-success' : 'border-danger'} mb-3`}>
+                    <div className={`card-body ${approve ? 'text-success' : 'text-danger'}`}>
+                      <h5 className="card-title">{approve ? 'Solicitud Aprobada' : 'Solicitud Rechazada'}</h5>
+                      <p className="card-text">
+                        Usuario: {approve ? selectedRequest.approveUser.name : selectedRequest.rejectUser.name} <br />
+                        Correo: {approve ? selectedRequest.approveUser.email : selectedRequest.rejectUser.email} <br />
+                        Fecha y Hora: {(new Date(approve ? selectedRequest.approveTime : selectedRequest.rejectTime)).toLocaleString()} <br />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              }
+
               <div className="col-12 my-2">
                 <label className="form-label">Nombre completo</label>
                 <input

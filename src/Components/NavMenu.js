@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, Fragment } from "react";
 import { Link, NavLink } from "react-router-dom";
 import ProfileButton from './ProfileButton';
 import { SiteName } from '../Config/SetupApp';
@@ -16,12 +16,12 @@ const NavMenu = (props) => {
     btn.classList.add("collapsed");
   };
   return (
-    <React.Fragment>
+    <Fragment>
       <header
         className="navbar navbar-expand-lg navbar-light bg-light "
         role="navigation"
       >
-        <nav className="container">
+        <nav className="container-fluid">
           <Link className="navbar-brand d-flex" to="/">
             <img
               src="assets/images/logos/logo.png"
@@ -68,7 +68,7 @@ const NavMenu = (props) => {
           </div>
         </nav>
       </header>
-    </React.Fragment>
+    </Fragment>
   );
 };
 export default NavMenu;
